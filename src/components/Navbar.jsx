@@ -9,7 +9,7 @@ function Navbar() {
        <h2 style={{textDecoration:'none'}}> EZ-Group Booking</h2>
        </Link>
        <div style={{display:'flex', justifyContent:'space-around'}}>
-       <Link to='/details' className='ml-2'>Dtails</Link>
+       <Link to='/' className='ml-2'>Dtails</Link>
        <Link to='/login'>LoGIN</Link>
        </div>
     </div>
