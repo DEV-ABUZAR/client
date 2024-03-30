@@ -1,0 +1,11 @@
+.side{
+  background-color: black;
+  height: 100%;
+  width: 6%;
+  
+}
+.btn{
+  position: relative;
+    /* display: flex; */
+    left: 51%;
+}
