@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import toast from  'react-hot-toast';
 // import Cookies from 'js-cookie';
 import {useNavigate} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 function Login() {
 //   const [validated, setValidated] = useState(false);
 // const navigate = useNavigate()
@@ -57,9 +58,11 @@ function Login() {
       <div className="main container">
         {/* <Form noValidate validated={validated} onSubmit={handleSubmit}> */}
         <Form >
+            <Link to='details'>
         <div className="logo" >
                 <img src="./logo.png" alt="" width={150} />
               </div>
+              </Link>
           <div className="boder" >
          
             <Row className=" " style={{display:'flex', flexFlow:'column', alignItems:'center', height:'90vh', justifyContent:'center'}}>
@@ -76,7 +79,7 @@ function Login() {
                 <Form.Control required type="password" placeholder="Password" name="password" />
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom02" style={{width:'39.3333%'}}>
-              <Button type="submit" style={{ width: '100%', marginTop: '5%', backgroundColor: '#2cb1bc', border: 'none' }}>Login</Button>
+              <Button type="submit" style={{ width: '100%', marginTop: '5%', backgroundColor: '#2cb1bc', border: 'none' ,left:'auto'}}>Login</Button>
               </Form.Group>
             </Row>
           </div>

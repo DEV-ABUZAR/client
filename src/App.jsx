@@ -5,14 +5,23 @@ import './App.css'
 import Login from './components/Login'
 import Details from './components/Details'
 import Update from './components/Update'
+import { BrowserRouter as Router, Link, Route,  Routes  } from 'react-router-dom';
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+    <Routes>
+      <Route path='/login' element={<Login />}></Route>
+      <Route path='/details' element={<Details />}></Route>
+      <Route path='/update' element={<Update />}></Route>
+
+
+    </Routes>
       {/* <Login /> */}
       {/* <Details /> */}
-      <Update />
+      {/* <Update /> */}
     </>
   )
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import Navbar from './Navbar';
 
 function Details() {
   return (
+    <>
+    <Navbar />
     <div className="container mt-5">
       <Table striped bordered hover>
         <tbody>
@@ -77,6 +80,7 @@ function Details() {
       <button className='border-0 bg-warning text-white p-2  rounded'>Approve?</button>
       </div>
     </div>
+    </>
   );
 }
 
