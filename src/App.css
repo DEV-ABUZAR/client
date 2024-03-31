@@ -9,3 +9,11 @@
     /* display: flex; */
     left: 51%;
 }
+.main{
+  border: 2px solid gray;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  border-radius: 20px;
+}
