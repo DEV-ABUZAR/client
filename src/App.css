@@ -17,3 +17,11 @@
   margin-top: 5%;
   border-radius: 20px;
 }
+.save{
+  border: none;
+    background: aliceblue;
+    border-radius: 20px;
+    font-size: larger;
+    font-weight: 500;
+    padding: 4px;
+}
