@@ -1,45 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Navbar from "./Navbar";
-import { useLocation , useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import Loader from "./Loader";
 function Details() {
-  const [laoding , setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [laoding, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
   const location = useLocation();
-  const [csvLoading, setCSVLoading] = useState(); 
+  const [csvLoading, setCSVLoading] = useState();
   const [buttonText, setButtonText] = useState("Generate CSV");
 
   const username = location.state?.data;
   console.log(username, "username");
-  localStorage.setItem('username', username);
-  
+  localStorage.setItem("username", username);
+
   // Get the username from local storage
-  const storedUsername = localStorage.getItem('username');
-  
+  const storedUsername = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await axios.get(
-        
           `https://ez-group-client-backend.vercel.app/api/v1/event/${storedUsername}`
         );
-        console.log(response.data)
-        if(response.data){
+        console.log(response.data);
+        if (response.data) {
           console.log("Data:", response.data);
           setUserData(response.data);
-          setLoading(false)
+          setLoading(false);
         }
-       
-        
       } catch (error) {
-        setLoading(false)
+        setLoading(false);
         console.error("Error fetching data:", error);
         // Handle errors
       }
@@ -54,8 +50,6 @@ function Details() {
     };
   }, [username]);
 
-  
- 
   const handleEdit = (Id) => {
     console.log("Edit clicked for event:", Id);
     // Pass the Id to the navigate function
@@ -70,8 +64,9 @@ function Details() {
       console.log("in the function");
       setCSVLoading(true);
       setButtonText("Generate CSV");
-      const response = await axios.get(`https://ez-group-client-backend.vercel.app/api/v1/event/${storedUsername}`);
-      
+      const response = await axios.get(
+        `https://ez-group-client-backend.vercel.app/api/v1/event/${storedUsername}`
+      );
 
       if (response.status === 200) {
         // Create a workbook and add a single sheet
@@ -92,7 +87,7 @@ function Details() {
               header !== "_id" &&
               header !== "__v" &&
               header !== "createdAt" &&
-              header !== "updatedAt" 
+              header !== "updatedAt"
           );
           // Prepare the data array with 'image' field removed
           const dataArray = response.data.map((obj) =>
@@ -118,50 +113,66 @@ function Details() {
       setButtonText("Generate CSV");
     }
   };
-  
+
   return (
     <>
       <Navbar />
-      {laoding? (
-        <div style={{display:'flex', justifyContent:'center'}}>
+      {laoding ? (
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Loader />
         </div>
-      ):(
-      <div className="container mt-5">
-        <Table bordered striped hover>
-          <thead>
-            <tr>
-              <th>Guest Name</th>
-              <th>Check-In</th>
-              <th>Check-Out</th>
-              <th>Extra People</th>
-              <th>During Event</th>
-              <th>Remarks</th>
-            </tr>
-          </thead>
-          <tbody>
+      ) : (
+        <div className="container mt-5">
+          <Table bordered striped hover>
+            <thead>
+              <tr>
+                <th>Guest Name</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Extra People</th>
+                <th>During Event</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+           
+            <tbody>
   {userData?.map((user) => (
     <tr key={user._id}>
-<td onClick={() => handleUsernameClick(user._id)} style={{cursor:'pointer'}}>{`${user.firstname}`}</td>
-<td style={{ color: user.firstAnomaly ? 'red' : 'inherit' }}>{user.firstAnomaly ? user.firstAnomaly : "No Anomaly"}</td>
-    <td style={{ color: user.secondAnomaly ? 'red' : 'inherit' }}>{user.secondAnomaly ? user.secondAnomaly : "No Anomaly"}</td>
-    <td style={{ color: user.thirdAnomaly ? 'red' : 'inherit' }}>{user.thirdAnomaly ? user.thirdAnomaly : "No Anomaly"}</td>
-    <td style={{ color: user.fourthAnomaly ? 'red' : 'inherit' }}>{user.fourthAnomaly ? user.fourthAnomaly : "No Anomaly"}</td>
-    <td style={{ color: user.remarks ? 'red' : 'inherit' }}>{user.remarks ? user.remarks : "No Remarks"}</td>
+      <td
+        onClick={() => handleUsernameClick(user._id)}
+        style={{ cursor: "pointer" }}
+      >
+        {`${user.firstname}`}
+      </td>
+      <td style={{ color: user.firstAnomaly ? "red" : "inherit" }}>
+        {user.firstAnomaly ? user.firstAnomaly : "No Anomaly"}
+      </td>
+      <td style={{ color: user.secondAnomaly ? "red" : "inherit" }}>
+        {user.secondAnomaly ? user.secondAnomaly : "No Anomaly"}
+      </td>
+      <td style={{ color: user.thirdAnomaly ? "red" : "inherit" }}>
+        {user.thirdAnomaly ? user.thirdAnomaly : "No Anomaly"}
+      </td>
+      <td style={{ color: user.fourthAnomaly ? "red" : "inherit" }}>
+        {user.fourthAnomaly ? user.fourthAnomaly : "No Anomaly"}
+      </td>
+      <td style={{ color: user.remarks ? "red" : "inherit" }}>
+        {user.remarks ? user.remarks : "No Remarks"}
+      </td>
     </tr>
   ))}
 </tbody>
 
-        </Table>
-        <button
-          type="button" 
+          </Table>
+          <button
+            type="button"
             className="w-40 h-12 mt-5 text-white bg-blue-500 ml-[50%] font-bold rounded-xl text-center justify-center hover:bg-blue-800"
             disabled={csvLoading}
             onClick={handleReport}
           >
-            {csvLoading  ? "Generating..." : "Generate CSV"}
+            {csvLoading ? "Generating..." : "Generate CSV"}
           </button>
-      </div>
+        </div>
       )}
     </>
   );
